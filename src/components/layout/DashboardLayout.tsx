@@ -85,7 +85,7 @@ export default function DashboardLayout() {
             <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <GraduationCap className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-sidebar-foreground">ALMATEUM</span>
+            <span className="text-xl font-bold text-sidebar-foreground font-sans">ALUMNA.AI</span>
           </div>
         </div>
 
