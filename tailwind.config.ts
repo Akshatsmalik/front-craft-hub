@@ -31,6 +31,14 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -57,6 +65,33 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        status: {
+          open: "hsl(var(--status-open))",
+          progress: "hsl(var(--status-progress))",
+          resolved: "hsl(var(--status-resolved))",
+          closed: "hsl(var(--status-closed))",
+          pending: "hsl(var(--status-pending))",
+          active: "hsl(var(--status-active))",
+          inactive: "hsl(var(--status-inactive))",
+          draft: "hsl(var(--status-draft))",
+          published: "hsl(var(--status-published))",
+          archived: "hsl(var(--status-archived))",
+        },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-secondary": "var(--gradient-secondary)",
+        "gradient-success": "var(--gradient-success)",
+        "gradient-warning": "var(--gradient-warning)",
+        "gradient-danger": "var(--gradient-danger)",
+        "gradient-card-1": "var(--gradient-card-1)",
+        "gradient-card-2": "var(--gradient-card-2)",
+        "gradient-card-3": "var(--gradient-card-3)",
+        "gradient-card-4": "var(--gradient-card-4)",
+      },
+      boxShadow: {
+        "primary": "var(--shadow-primary)",
+        "lg": "var(--shadow-lg)",
       },
       borderRadius: {
         lg: "var(--radius)",

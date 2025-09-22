@@ -8,89 +8,141 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Admin Dashboard Design System - Light Mode */
+    --background: 220 13% 18%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 10% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 267 78% 65%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 15% 20%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 267 78% 65%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
 
-    --radius: 0.5rem;
+    --warning: 48 96% 53%;
+    --warning-foreground: 222.2 84% 4.9%;
 
-    --sidebar-background: 0 0% 98%;
+    --border: 240 15% 25%;
+    --input: 240 15% 25%;
+    --ring: 267 78% 65%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --radius: 0.75rem;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Sidebar colors */
+    --sidebar-background: 240 15% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 267 78% 65%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 240 15% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 240 15% 20%;
+    --sidebar-ring: 267 78% 65%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Status colors */
+    --status-open: 267 78% 65%;
+    --status-progress: 48 96% 53%;
+    --status-resolved: 142 76% 36%;
+    --status-closed: 0 84.2% 60.2%;
+    --status-pending: 35 91% 64%;
+    --status-active: 142 76% 36%;
+    --status-inactive: 0 84.2% 60.2%;
+    --status-draft: 48 96% 53%;
+    --status-published: 142 76% 36%;
+    --status-archived: 215 20.2% 65.1%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(267 78% 65%), hsl(287 78% 75%));
+    --gradient-secondary: linear-gradient(135deg, hsl(240 15% 20%), hsl(240 15% 25%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(162 76% 46%));
+    --gradient-warning: linear-gradient(135deg, hsl(48 96% 53%), hsl(68 96% 63%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 84.2% 60.2%), hsl(20 84.2% 70.2%));
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    /* Card gradients */
+    --gradient-card-1: linear-gradient(135deg, hsl(267 78% 35%) 0%, hsl(287 78% 45%) 100%);
+    --gradient-card-2: linear-gradient(135deg, hsl(0 84.2% 40.2%) 0%, hsl(20 84.2% 50.2%) 100%);
+    --gradient-card-3: linear-gradient(135deg, hsl(240 50% 30%) 0%, hsl(260 50% 40%) 100%);
+    --gradient-card-4: linear-gradient(135deg, hsl(142 76% 26%) 0%, hsl(162 76% 36%) 100%);
 
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Shadows */
+    --shadow-lg: 0 10px 15px -3px hsl(var(--primary) / 0.1), 0 4px 6px -2px hsl(var(--primary) / 0.05);
+    --shadow-primary: 0 4px 14px 0 hsl(var(--primary) / 0.25);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    /* Dark mode inherits same values since this is already a dark theme */
+    --background: 220 13% 18%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
+    --card: 240 10% 12%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
+    --popover: 240 10% 12%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
+    --primary: 267 78% 65%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 240 15% 20%;
     --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 240 10% 15%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 267 78% 65%;
     --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+    --border: 240 15% 25%;
+    --input: 240 15% 25%;
+    --ring: 267 78% 65%;
+    --sidebar-background: 240 15% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 267 78% 65%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 240 15% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 240 15% 20%;
+    --sidebar-ring: 267 78% 65%;
+  }
+}
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
   }
 }
 
