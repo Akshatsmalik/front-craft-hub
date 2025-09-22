@@ -144,15 +144,15 @@ export default function Dashboard() {
             <CardTitle>Student Interest Rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-64 mb-6">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
+                    innerRadius={50}
+                    outerRadius={90}
                     paddingAngle={5}
                     dataKey="value"
                   >
@@ -162,18 +162,18 @@ export default function Dashboard() {
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-              <div className="mt-4 space-y-2">
-                {pieData.map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-muted-foreground">{item.name}</span>
-                    <span className="ml-auto font-medium">{item.value}%</span>
-                  </div>
-                ))}
-              </div>
+            </div>
+            <div className="space-y-3">
+              {pieData.map((item, index) => (
+                <div key={index} className="flex items-center gap-3 text-sm">
+                  <div 
+                    className="w-3 h-3 rounded-full flex-shrink-0" 
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="text-muted-foreground flex-1">{item.name}</span>
+                  <span className="font-medium">{item.value}%</span>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
