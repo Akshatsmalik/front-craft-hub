@@ -1,8 +1,12 @@
 # ALUMNA.AI Backend API
 
-A simple Node.js backend for the ALUMNA.AI Admin Dashboard.
+A Node.js backend with MongoDB for the ALUMNA.AI Admin Dashboard.
 
 ## Setup
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (local installation or MongoDB Atlas)
 
 1. Install dependencies:
 ```bash
@@ -15,9 +19,18 @@ npm install
 PORT=3001
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/alumna-ai-dashboard
 ```
 
-3. Start the server:
+3. Make sure MongoDB is running:
+```bash
+# For local MongoDB
+mongod
+
+# Or use MongoDB Atlas cloud database
+```
+
+4. Start the server:
 ```bash
 # Development mode with auto-restart
 npm run dev
@@ -86,18 +99,32 @@ npm start
 - Email: `admin@dashboard.com`
 - Password: `password`
 
+## Database
+
+The application uses MongoDB with Mongoose ODM. The database will be automatically created when you first run the server.
+
+### Collections:
+- `users` - User management data
+- `sessions` - Counseling sessions
+- `colleges` - College registration information
+- `supporttickets` - Support tickets
+- `contents` - Content management
+- `auditlogs` - System audit logs
+
 ## Features
 
 - JWT-based authentication
+- MongoDB database integration
 - CORS enabled for frontend integration
-- Mock data for development
+- Mongoose ODM for data modeling
 - Error handling middleware
 - Input validation
 - RESTful API design
 
 ## Notes
 
-- This is a development backend using in-memory data storage
-- For production, replace mock data with a real database
+- The backend now uses MongoDB for persistent data storage
+- All data is properly validated using Mongoose schemas
 - Update JWT_SECRET in production
 - Add rate limiting and additional security measures for production use
+- For production, consider using MongoDB Atlas for cloud database hosting

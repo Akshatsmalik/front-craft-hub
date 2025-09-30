@@ -1,82 +1,105 @@
 const express = require('express');
-const { users } = require('../data/mockData');
+const User = require('../models/User');
 const router = express.Router();
 
 // Get all users
-router.get('/', (req, res) => {
-  const { role, status, search } = req.query;
-  
-  let filteredUsers = [...users];
+router.get('/', async (req, res) => {
+  try {
+    const { role, status, search } = req.query;
+    
+    let query = {};
 
-  if (role && role !== 'all') {
-    filteredUsers = filteredUsers.filter(user => user.role === role);
+    if (role && role !== 'all') {
+      query.role = role;
+    }
+
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    const users = await User.find(query).sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  if (status && status !== 'all') {
-    filteredUsers = filteredUsers.filter(user => user.status === status);
-  }
-
-  if (search) {
-    filteredUsers = filteredUsers.filter(user => 
-      user.name.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase())
-    );
-  }
-
-  res.json(filteredUsers);
 });
 
 // Get user by ID
-router.get('/:id', (req, res) => {
-  const user = users.find(u => u.id === req.params.id);
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  res.json(user);
 });
 
 // Create new user
-router.post('/', (req, res) => {
-  const { name, email, role, status } = req.body;
-  
-  if (!name || !email || !role) {
-    return res.status(400).json({ error: 'Name, email, and role are required' });
+router.post('/', async (req, res) => {
+  try {
+    const { name, email, role, status } = req.body;
+    
+    if (!name || !email || !role) {
+      return res.status(400).json({ error: 'Name, email, and role are required' });
+    }
+
+    const user = new User({
+      name,
+      email,
+      role,
+      status: status || 'pending'
+    });
+
+    await user.save();
+    res.status(201).json(user);
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+    res.status(500).json({ error: error.message });
   }
-
-  const newUser = {
-    id: require('uuid').v4(),
-    name,
-    email,
-    role,
-    status: status || 'pending',
-    avatar: name.split(' ').map(n => n[0]).join('').toUpperCase(),
-    createdAt: new Date()
-  };
-
-  users.push(newUser);
-  res.status(201).json(newUser);
 });
 
 // Update user
-router.put('/:id', (req, res) => {
-  const userIndex = users.findIndex(u => u.id === req.params.id);
-  if (userIndex === -1) {
-    return res.status(404).json({ error: 'User not found' });
+router.put('/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  users[userIndex] = { ...users[userIndex], ...req.body };
-  res.json(users[userIndex]);
 });
 
 // Delete user
-router.delete('/:id', (req, res) => {
-  const userIndex = users.findIndex(u => u.id === req.params.id);
-  if (userIndex === -1) {
-    return res.status(404).json({ error: 'User not found' });
+router.delete('/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  users.splice(userIndex, 1);
-  res.json({ message: 'User deleted successfully' });
 });
 
 module.exports = router;

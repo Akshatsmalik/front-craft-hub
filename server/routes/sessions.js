@@ -1,75 +1,108 @@
 const express = require('express');
-const { sessions } = require('../data/mockData');
+const Session = require('../models/Session');
 const router = express.Router();
 
 // Get all sessions
-router.get('/', (req, res) => {
-  const { status, date } = req.query;
-  
-  let filteredSessions = [...sessions];
+router.get('/', async (req, res) => {
+  try {
+    const { status, date } = req.query;
+    
+    let query = {};
 
-  if (status && status !== 'all') {
-    filteredSessions = filteredSessions.filter(session => session.status === status);
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+
+    if (date) {
+      const startDate = new Date(date);
+      const endDate = new Date(date);
+      endDate.setDate(endDate.getDate() + 1);
+      
+      query.date = {
+        $gte: startDate,
+        $lt: endDate
+      };
+    }
+
+    const sessions = await Session.find(query).sort({ date: -1 });
+    res.json(sessions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  if (date) {
-    filteredSessions = filteredSessions.filter(session => session.date === date);
-  }
-
-  res.json(filteredSessions);
 });
 
 // Get session by ID
-router.get('/:id', (req, res) => {
-  const session = sessions.find(s => s.id === req.params.id);
-  if (!session) {
-    return res.status(404).json({ error: 'Session not found' });
+router.get('/:id', async (req, res) => {
+  try {
+    const session = await Session.findById(req.params.id);
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  res.json(session);
 });
 
 // Create new session
-router.post('/', (req, res) => {
-  const { studentName, counselorName, date, status } = req.body;
-  
-  if (!studentName || !counselorName || !date) {
-    return res.status(400).json({ error: 'Student name, counselor name, and date are required' });
+router.post('/', async (req, res) => {
+  try {
+    const { studentName, counselorName, date, status } = req.body;
+    
+    if (!studentName || !counselorName || !date) {
+      return res.status(400).json({ error: 'Student name, counselor name, and date are required' });
+    }
+
+    // Generate session ID
+    const sessionCount = await Session.countDocuments();
+    const sessionId = `S${String(sessionCount + 1).padStart(3, '0')}`;
+
+    const session = new Session({
+      sessionId,
+      studentName,
+      counselorName,
+      date: new Date(date),
+      status: status || 'scheduled',
+      feedback: 'N/A'
+    });
+
+    await session.save();
+    res.status(201).json(session);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  const newSession = {
-    id: `S${String(sessions.length + 1).padStart(3, '0')}`,
-    sessionId: `S${String(sessions.length + 1).padStart(3, '0')}`,
-    studentName,
-    counselorName,
-    date,
-    status: status || 'scheduled',
-    feedback: 'N/A'
-  };
-
-  sessions.push(newSession);
-  res.status(201).json(newSession);
 });
 
 // Update session
-router.put('/:id', (req, res) => {
-  const sessionIndex = sessions.findIndex(s => s.id === req.params.id);
-  if (sessionIndex === -1) {
-    return res.status(404).json({ error: 'Session not found' });
+router.put('/:id', async (req, res) => {
+  try {
+    const session = await Session.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  sessions[sessionIndex] = { ...sessions[sessionIndex], ...req.body };
-  res.json(sessions[sessionIndex]);
 });
 
 // Delete session
-router.delete('/:id', (req, res) => {
-  const sessionIndex = sessions.findIndex(s => s.id === req.params.id);
-  if (sessionIndex === -1) {
-    return res.status(404).json({ error: 'Session not found' });
+router.delete('/:id', async (req, res) => {
+  try {
+    const session = await Session.findByIdAndDelete(req.params.id);
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    res.json({ message: 'Session deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  sessions.splice(sessionIndex, 1);
-  res.json({ message: 'Session deleted successfully' });
 });
 
 module.exports = router;
